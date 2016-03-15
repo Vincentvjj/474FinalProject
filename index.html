@@ -1,5 +1,9 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <link rel="stylesheet" href="/d3.slider.css" />  
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <style>
 
 /* CSS goes here. */
@@ -62,14 +66,19 @@ td .tooltip {
   <h1 align="middle" style="color: darkblue;">Gentrification of Seattle</h1>
 </head>
 <body>
+  
   <table>
-    <td>
-      Insert graph here and the checkboxes
+
+    <td style="vertical-align: top">
+      <div id="slider-range"></div>
+       <!-- Insert graph here and the checkboxes -->
     </td>
-    <td class="chart">
-      <div class="slider">insert slider here</div>
+    <td class="chart" style="text-align: center;">
+    </td>
+
 
     </td>
+
 
 
 
@@ -77,6 +86,8 @@ td .tooltip {
 
 </body>
 
+
 <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script src="//d3js.org/topojson.v1.min.js"></script>
+<script src="/d3.slider.js"></script>
 <script type="text/javascript" src="/main.js"></script>

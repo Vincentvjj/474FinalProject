@@ -1,4 +1,4 @@
-var width = 960,
+var width = 600,
     height = 800,
     centered;
 
@@ -18,6 +18,22 @@ var svg = d3.select(".chart").append("svg")
 
 var g = svg.append("g");
 
+// var slider = $('#slider-range');
+
+// slider.slider({
+//   orientation: "vertical",
+//   range: true,
+//   values: [17, 67]
+// });
+
+d3.select('#slider-range').call(d3.slider().scale(d3.time.scale()
+    .domain([new Date(2009,1,1), new Date(2016,1,1)]))
+    .axis( d3.svg.axis() ).snap(true).value([new Date(2010,1,1),new Date(2016,1,1)])
+    .on("slide", function(evt, value) {
+      //value[ 0 ]
+      console.log(value[0]+value[1]);
+      //value[ 1 ]
+    }));
 
 
 var tooltip = d3.select('.chart').append('div')
@@ -45,7 +61,7 @@ d3.json("Neighborhoods.json", function(error, neigh) {
           return parseInt(d);
         });
         tooltip.classed('hidden', false)
-          .attr('style', 'left:' + (mouse[0] + 770) + 'px; top:' + (mouse[1] + 40) + 'px')
+          .attr('style', 'left:' + (mouse[0] + 880) + 'px; top:' + (mouse[1] + 40) + 'px')
           .html(d.properties.S_HOOD);
       }).on("mouseout", function() {
         tooltip.classed('hidden', true); 
