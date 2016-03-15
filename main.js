@@ -49,7 +49,14 @@ d3.json("Neighborhoods.json", function(error, neigh) {
     .selectAll(".collection")
       .data(topojson.feature(neigh, neigh.objects.collection).features)
     .enter().append("path")
-      .attr("class", function(d) {return "collection " + d.properties.S_HOOD; })
+      .attr("class", function(d) {
+        if(d.properties.S_HOOD){
+          return "collection " + d.properties.S_HOOD.replace(/\s/g, '');
+        } else {
+          return "collection " + "none";
+        }
+         
+      })
       .attr("d", path)
       .on("click", clicked)
       .on("mousemove", function(d) {
@@ -79,6 +86,8 @@ d3.json("Neighborhoods.json", function(error, neigh) {
 
 arrays = loadCrimes(svg);
 arrays2 = loadPermits(svg);
+landPermits = loadLandPermits(svg);
+culture = loadCulture(svg);
 console.log(arrays);
 console.log(arrays2);
 
@@ -103,6 +112,30 @@ function loadPermits(svg) {
         console.log(permits)
     });
     return permits;
+}
+
+function loadLandPermits(svg) {
+  lpermits = [];
+    d3.tsv("data/Land_Use_Permits.txt", function(data) {
+        data.forEach(function(d) {
+            lpermits.push({ "Address": d["Address"], "Applicant Name": d["Applicant Name"], "Neighborhood Calculated": d["Neighborhood Calculated"], 
+              "Issue Date": d["Issue Date"], "Latitude": d["Latitude"], "Longitude": d["Longitude"], "Application Date" : d["Application Date"]});
+        });
+        console.log(lpermits)
+    });
+    return lpermits;
+}
+
+function loadCulture(svg) {
+  cpermits = [];
+    d3.tsv("data/Seattle_Cultural_Space_Inventory-3.txt", function(data) {
+        data.forEach(function(d) {
+            cpermits.push({ "Name": d["Name"], "Constiuents": d["Constiuents"], "Location": d["Location"], "Neighborhood": d["Neighborhood"],  "Year Occupied": d["Year Occupied"],
+              "Own or Rent": d["Own or Rent"], "Parking Spaces": d["Parking Spaces"], "Square Feet": d["Square Feet"], "Type" : d["Type"]});
+        });
+        console.log(cpermits)
+    });
+    return cpermits;
 }
 
 function clicked(d) {
