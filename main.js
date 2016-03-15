@@ -18,13 +18,7 @@ var svg = d3.select(".chart").append("svg")
 
 var g = svg.append("g");
 
-// var slider = $('#slider-range');
 
-// slider.slider({
-//   orientation: "vertical",
-//   range: true,
-//   values: [17, 67]
-// });
 
 d3.select('#slider-range').call(d3.slider().scale(d3.time.scale()
     .domain([new Date(2009,1,1), new Date(2016,1,1)]))
@@ -35,6 +29,11 @@ d3.select('#slider-range').call(d3.slider().scale(d3.time.scale()
       //value[ 1 ]
     }));
 
+var rateById = d3.map();
+
+var quantize = d3.scale.quantize()
+    .domain([0, .15])
+    .range(d3.range(9).map(function(i) { return "q" + i + "-9"; }));
 
 var tooltip = d3.select('.chart').append('div')
     .attr('class', 'hidden tooltip');
@@ -77,23 +76,23 @@ d3.json("Neighborhoods.json", function(error, neigh) {
     .attr("dy", ".35em");
 });
 
-arrays = loadCrimes(svg);
-arrays2 = loadPermits(svg);
+arrays = loadCrimes();
+arrays2 = loadPermits();
 console.log(arrays);
 console.log(arrays2);
 
-function loadCrimes(svg) {
+function loadCrimes() {
 	crimes = [];
     d3.csv("crimes2.csv", function(data) {
         data.forEach(function(d) {
             crimes.push({ "Crime": d["Crime"], "Latitude": d["Latitude"], "Longitude": d["Longitude"], "Year" : d["Year"], "Neighborhood" : d["Neighborhood"]});
         });  
-        console.log(crimes) 
+        gradientsCrime(2015,crimes)
     });
     return crimes;
 }
 
-function loadPermits(svg) {
+function loadPermits() {
   permits = [];
     d3.csv("permits.csv", function(data) {
         data.forEach(function(d) {
@@ -105,7 +104,34 @@ function loadPermits(svg) {
     return permits;
 }
 
+function gradientsCrime(num, array) {
+  neighborhoods = [];
+  for(i = 0; i < array.length;i++) {
+    if(parseInt(arrays[i].Year) == num)  
+      if(neighborhoods[arrays[i].Neighborhood] == undefined) {
+        neighborhoods[arrays[i].Neighborhood] = 1;
+      }
+      else {
+        neighborhoods[arrays[i].Neighborhood] = neighborhoods[arrays[i].Neighborhood] + 1;
+      }
+  }
+  for(var key in neighborhoods) {
+    if(neighborhoods[key] == 1) {
+      console.log(key);
+    }  
+  }
+  console.log(neighborhoods);
+}
+
+function gradientsPermits(num, array) {
+  for(i = 0; i < array.length;i++) {
+    if(parseInt(arrays[i].Year) == num)  
+      console.log(arrays[i])
+  }
+}
+
 function clicked(d) {
+  d3.select(".Roosevelt").style("fill","green");
   var x, y, k;
 
   if (d && centered !== d) {
