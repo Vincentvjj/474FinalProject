@@ -238,22 +238,133 @@ function loadLandPermits(svg) {
   lpermits = [];
     d3.tsv("data/Land_Use_Permits.txt", function(data) {
         data.forEach(function(d) {
-            lpermits.push({ "Address": d["Address"], "Applicant Name": d["Applicant Name"], "Neighborhood Calculated": d["Neighborhood Calculated"], 
-              "Issue Date": d["Issue Date"], "Latitude": d["Latitude"], "Longitude": d["Longitude"], "Application Date" : d["Application Date"]});
+            lpermits.push({ "Address": d["Address"], "Applicant Name": d["Applicant Name"], "NeighborhoodCalculated": d["Neighborhood Calculated"].replace(/\s+/g, ''), 
+               "Latitude": d["Latitude"], "Longitude": d["Longitude"], "ApplicationDate" : "20"+d["Application Date"].substring(d["Application Date"].length-2)});
         });
     });
+        gradientsLandPermits(2015,lpermits);
     return lpermits;
+}
+
+function gradientsLandPermits(num, array) {
+  land = [];
+  for(i = 0; i < array.length;i++) {
+    if(parseInt(arrays[i].Year) == num)  
+      if(land[arrays[i].NeighborhoodCalculated] == undefined) {
+        land[arrays[i].NeighborhoodCalculated] = 1;
+      }
+      else {
+        land[arrays[i].NeighborhoodCalculated] = land[arrays[i].NeighborhoodCalculated] + 1;
+      }
+  }
+  for(var key in land) {
+    if(land[key] < 5) {
+      try {
+        d3.select("."+key).transition().style("fill","rgb(200, 200, 255)");
+      }
+      catch(err) {
+        console.log("hi")
+      }
+    }
+    else if(land[key] >= 5 && land[key] < 10) {
+      try {
+        d3.select("."+key).transition().style("fill","rgb(150, 150, 255)");
+      }
+      catch(err) {
+        console.log("hi")
+      }
+    }
+    else if(land[key] >= 10 && land[key] < 20) {
+      try {
+        d3.select("."+key).transition().style("fill","rgb(100, 100, 255)");
+      }
+      catch(err) {
+        console.log("hi")
+      }
+    }  
+    else if(land[key] >= 20 && land[key] < 30) {
+      try {
+        d3.select("."+key).transition().style("fill","rgb(50, 50, 255)");
+      }
+      catch(err) {
+        console.log("hi")
+      }
+    }
+    else if(land[key] >= 30) {
+      try {
+        d3.select("."+key).transition().style("fill","rgb(0, 0, 255)");
+      }
+      catch(err) {
+        console.log("hi")
+      }
+    }   
+  }
 }
 
 function loadCulture(svg) {
   cpermits = [];
     d3.tsv("data/Seattle_Cultural_Space_Inventory-3.txt", function(data) {
         data.forEach(function(d) {
-            cpermits.push({ "Name": d["Name"], "Constiuents": d["Constiuents"], "Location": d["Location"], "Neighborhood": d["Neighborhood"],  "Year Occupied": d["Year Occupied"],
+            cpermits.push({ "Name": d["Name"], "Constiuents": d["Constiuents"], "Location": d["Location"], "Neighborhood": d["Neighborhood"].replace(/\s+/g, ''),  "Year Occupied": d["Year Occupied"],
               "Own or Rent": d["Own or Rent"], "Parking Spaces": d["Parking Spaces"], "Square Feet": d["Square Feet"], "Type" : d["Type"]});
         });
     });
+    gradientsCulture(2015,lpermits);
     return cpermits;
+}
+function gradientsCulture(num, array) {
+  cult = [];
+  for(i = 0; i < array.length;i++) {
+    if(parseInt(arrays[i].Year) == num)  
+      if(cult[arrays[i].Neighborhood] == undefined) {
+        cult[arrays[i].Neighborhood] = 1;
+      }
+      else {
+        cult[arrays[i].Neighborhood] = cult[arrays[i].Neighborhood] + 1;
+      }
+  }
+  for(var key in cult) {
+    if(cult[key] < 5) {
+      try {
+        d3.select("."+key).transition().style("fill","rgb(200, 200, 255)");
+      }
+      catch(err) {
+        console.log("hi")
+      }
+    }
+    else if(cult[key] >= 5 && cult[key] < 10) {
+      try {
+        d3.select("."+key).transition().style("fill","rgb(150, 150, 255)");
+      }
+      catch(err) {
+        console.log("hi")
+      }
+    }
+    else if(cult[key] >= 10 && cult[key] < 20) {
+      try {
+        d3.select("."+key).transition().style("fill","rgb(100, 100, 255)");
+      }
+      catch(err) {
+        console.log("hi")
+      }
+    }  
+    else if(cult[key] >= 20 && cult[key] < 30) {
+      try {
+        d3.select("."+key).transition().style("fill","rgb(50, 50, 255)");
+      }
+      catch(err) {
+        console.log("hi")
+      }
+    }
+    else if(cult[key] >= 30) {
+      try {
+        d3.select("."+key).transition().style("fill","rgb(0, 0, 255)");
+      }
+      catch(err) {
+        console.log("hi")
+      }
+    }   
+  }
 }
 
 function clicked(d) {
