@@ -4,6 +4,7 @@
     <list default="true" id="4a7818c9-e65f-485e-9fb7-629c2646db59" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.js" afterPath="$PROJECT_DIR$/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/permits.csv" afterPath="$PROJECT_DIR$/permits.csv" />
     </list>
     <ignored path="474FinalProject.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -29,7 +30,7 @@
       <file leaf-file-name="cordstohoods" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cordstohoods">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.738255" vertical-offset="705" max-vertical-offset="1185">
+            <state vertical-scroll-proportion="0.9328859" vertical-offset="618" max-vertical-offset="1185">
               <caret line="69" column="70" selection-start-line="69" selection-start-column="70" selection-end-line="69" selection-end-column="70" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
@@ -374,7 +375,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cordstohoods">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.738255" vertical-offset="705" max-vertical-offset="1185">
+        <state vertical-scroll-proportion="0.9328859" vertical-offset="618" max-vertical-offset="1185">
           <caret line="69" column="70" selection-start-line="69" selection-start-column="70" selection-end-line="69" selection-end-column="70" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />

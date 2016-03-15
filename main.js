@@ -95,9 +95,10 @@ function loadCrimes() {
 	crimes = [];
     d3.csv("crimes2.csv", function(data) {
         data.forEach(function(d) {
-            crimes.push({ "Crime": d["Crime"], "Latitude": d["Latitude"], "Longitude": d["Longitude"], "Year" : d["Year"], "Neighborhood" : d["Neighborhood"]});
+            var str = d["Neighborhood"].replace(/\s+/g, '');
+            crimes.push({ "Crime": d["Crime"], "Latitude": d["Latitude"], "Longitude": d["Longitude"], "Year" : d["Year"], "Neighborhood" : str});
         });  
-        gradientsCrime(2015,crimes)
+        //gradientsCrime(2012,crimes)
     });
     return crimes;
 }
@@ -106,16 +107,21 @@ function loadPermits() {
   permits = [];
     d3.csv("permits.csv", function(data) {
         data.forEach(function(d) {
-            permits.push({ "Permit Type": d["Permit Type"], "Value": d["Value"], "Issue Date": d["Issue Date"], 
-              "Status": d["Status"], "Latitude": d["Latitude"], "Longitude": d["Longitude"], "Neighborhood" : d["Neighborhood"]});
+            var str = d["Neighborhood"].replace(/\s+/g, '');
+            var date = "20"+d["Issue Date"].substring(d["Issue Date"].length-2, d["Issue Date"].length)
+            permits.push({ "Permit Type": d["Permit Type"], "Value": d["Value"], "Year": date, 
+              "Status": d["Status"], "Latitude": d["Latitude"], "Longitude": d["Longitude"], "Neighborhood" : str});
         });
         console.log(permits)
+        gradientsPermits(2013,permits)
     });
     return permits;
 }
 
 function gradientsCrime(num, array) {
   neighborhoods = [];
+  console.log("HUEHUEHUE")
+  console.log(array)
   for(i = 0; i < array.length;i++) {
     if(parseInt(arrays[i].Year) == num)  
       if(neighborhoods[arrays[i].Neighborhood] == undefined) {
@@ -126,18 +132,108 @@ function gradientsCrime(num, array) {
       }
   }
   for(var key in neighborhoods) {
-    if(neighborhoods[key] == 1) {
-      console.log(key);
+    if(neighborhoods[key] < 5) {
+      try {
+        d3.select("."+key).style("fill","rgb(200, 200, 255)");
+      }
+      catch(err) {
+        console.log("hi")
+      }
+    }
+    else if(neighborhoods[key] >= 5 && neighborhoods[key] < 10) {
+      try {
+        d3.select("."+key).style("fill","rgb(150, 150, 255)");
+      }
+      catch(err) {
+        console.log("hi")
+      }
+    }
+    else if(neighborhoods[key] >= 10 && neighborhoods[key] < 20) {
+      try {
+        d3.select("."+key).style("fill","rgb(100, 100, 255)");
+      }
+      catch(err) {
+        console.log("hi")
+      }
     }  
+    else if(neighborhoods[key] >= 20 && neighborhoods[key] < 30) {
+      try {
+        d3.select("."+key).style("fill","rgb(50, 50, 255)");
+      }
+      catch(err) {
+        console.log("hi")
+      }
+    }
+    else if(neighborhoods[key] >= 30) {
+      try {
+        d3.select("."+key).style("fill","rgb(0, 0, 255)");
+      }
+      catch(err) {
+        console.log("hi")
+      }
+    }   
   }
-  console.log(neighborhoods);
 }
 
 function gradientsPermits(num, array) {
+  permits = [];
+  console.log(array);
   for(i = 0; i < array.length;i++) {
-    if(parseInt(arrays[i].Year) == num)  
-      console.log(arrays[i])
+    if(arrays[i] != undefined) {
+      if(parseInt(arrays[i].Year) == num) {  
+        if(permits[arrays[i].Neighborhood] == undefined) {
+          permits[arrays[i].Neighborhood] = 1;
+        }
+        else {
+          permits[arrays[i].Neighborhood] = permits[arrays[i].Neighborhood] + 1;
+        }
+      }
+    }
   }
+  console.log(permits);
+  for(var key in permits) {
+    if(permits[key] < 5) {
+      try {
+        d3.select("."+key).style("fill","rgb(200, 200, 255)");
+      }
+      catch(err) {
+        console.log("hi")
+      }
+    }
+    else if(permits[key] >= 5 && permits[key] < 10) {
+      try {
+        d3.select("."+key).style("fill","rgb(150, 150, 255)");
+      }
+      catch(err) {
+        console.log("hi")
+      }
+    }
+    else if(permits[key] >= 10 && permits[key] < 20) {
+      try {
+        d3.select("."+key).style("fill","rgb(100, 100, 255)");
+      }
+      catch(err) {
+        console.log("hi")
+      }
+    }  
+    else if(permits[key] >= 20 && permits[key] < 30) {
+      try {
+        d3.select("."+key).style("fill","rgb(50, 50, 255)");
+      }
+      catch(err) {
+        console.log("hi")
+      }
+    }
+    else if(permits[key] >= 30) {
+      try {
+        d3.select("."+key).style("fill","rgb(0, 0, 255)");
+      }
+      catch(err) {
+        console.log("hi")
+      }
+    }   
+  }
+}
 
 function loadLandPermits(svg) {
   lpermits = [];
@@ -164,7 +260,6 @@ function loadCulture(svg) {
 }
 
 function clicked(d) {
-  d3.select(".Roosevelt").style("fill","green");
   var x, y, k;
 
   if (d && centered !== d) {
