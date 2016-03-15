@@ -61,6 +61,33 @@ d3.json("Neighborhoods.json", function(error, neigh) {
     .attr("dy", ".35em");
 });
 
+arrays = loadCrimes(svg);
+arrays2 = loadPermits(svg);
+console.log(arrays);
+console.log(arrays2);
+
+function loadCrimes(svg) {
+	crimes = [];
+    d3.csv("crimes2.csv", function(data) {
+        data.forEach(function(d) {
+            crimes.push({ "Crime": d["Crime"], "Latitude": d["Latitude"], "Longitude": d["Longitude"], "Year" : d["Year"], "Neighborhood" : d["Neighborhood"]});
+        });  
+        console.log(crimes) 
+    });
+    return crimes;
+}
+
+function loadPermits(svg) {
+  permits = [];
+    d3.csv("permits.csv", function(data) {
+        data.forEach(function(d) {
+            permits.push({ "Permit Type": d["Permit Type"], "Value": d["Value"], "Issue Date": d["Issue Date"], 
+              "Status": d["Status"], "Latitude": d["Latitude"], "Longitude": d["Longitude"], "Neighborhood" : d["Neighborhood"]});
+        });
+        console.log(permits)
+    });
+    return permits;
+}
 
 function clicked(d) {
   var x, y, k;
