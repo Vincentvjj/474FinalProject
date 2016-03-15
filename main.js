@@ -18,15 +18,20 @@ var svg = d3.select(".chart").append("svg")
 
 var g = svg.append("g");
 
+var start = 2010;
+var end = 2016;
+
 
 
 d3.select('#slider-range').call(d3.slider().scale(d3.time.scale()
     .domain([new Date(2009,1,1), new Date(2016,1,1)]))
     .axis( d3.svg.axis() ).snap(true).value([new Date(2010,1,1),new Date(2016,1,1)])
     .on("slide", function(evt, value) {
-      //value[ 0 ]
-      console.log(value[0]+value[1]);
-      //value[ 1 ]
+      start = new Date(value[0]).getFullYear();
+      end = new Date(value[1]).getFullYear();
+      document.getElementById("year").innerHTML = "Year: " + start;
+      gradientsCrime(start, arrays);
+
     }));
 
 var rateById = d3.map();
@@ -88,8 +93,6 @@ arrays2 = loadPermits(svg);
 landPermits = loadLandPermits(svg);
 culture = loadCulture(svg);
 
-console.log(arrays);
-console.log(arrays2);
 
 function loadCrimes() {
 	crimes = [];
@@ -98,7 +101,8 @@ function loadCrimes() {
             var str = d["Neighborhood"].replace(/\s+/g, '');
             crimes.push({ "Crime": d["Crime"], "Latitude": d["Latitude"], "Longitude": d["Longitude"], "Year" : d["Year"], "Neighborhood" : str});
         });  
-        //gradientsCrime(2012,crimes)
+
+        gradientsCrime(2015,crimes)
     });
     return crimes;
 }
@@ -112,16 +116,13 @@ function loadPermits() {
             permits.push({ "Permit Type": d["Permit Type"], "Value": d["Value"], "Year": date, 
               "Status": d["Status"], "Latitude": d["Latitude"], "Longitude": d["Longitude"], "Neighborhood" : str});
         });
-        console.log(permits)
-        gradientsPermits(2013,permits)
+        // gradientsPermits(2013,permits)
     });
     return permits;
 }
 
 function gradientsCrime(num, array) {
   neighborhoods = [];
-  console.log("HUEHUEHUE")
-  console.log(array)
   for(i = 0; i < array.length;i++) {
     if(parseInt(arrays[i].Year) == num)  
       if(neighborhoods[arrays[i].Neighborhood] == undefined) {
@@ -134,7 +135,7 @@ function gradientsCrime(num, array) {
   for(var key in neighborhoods) {
     if(neighborhoods[key] < 5) {
       try {
-        d3.select("."+key).style("fill","rgb(200, 200, 255)");
+        d3.select("."+key).transition().style("fill","rgb(200, 200, 255)");
       }
       catch(err) {
         console.log("hi")
@@ -142,7 +143,7 @@ function gradientsCrime(num, array) {
     }
     else if(neighborhoods[key] >= 5 && neighborhoods[key] < 10) {
       try {
-        d3.select("."+key).style("fill","rgb(150, 150, 255)");
+        d3.select("."+key).transition().style("fill","rgb(150, 150, 255)");
       }
       catch(err) {
         console.log("hi")
@@ -150,7 +151,7 @@ function gradientsCrime(num, array) {
     }
     else if(neighborhoods[key] >= 10 && neighborhoods[key] < 20) {
       try {
-        d3.select("."+key).style("fill","rgb(100, 100, 255)");
+        d3.select("."+key).transition().style("fill","rgb(100, 100, 255)");
       }
       catch(err) {
         console.log("hi")
@@ -158,7 +159,7 @@ function gradientsCrime(num, array) {
     }  
     else if(neighborhoods[key] >= 20 && neighborhoods[key] < 30) {
       try {
-        d3.select("."+key).style("fill","rgb(50, 50, 255)");
+        d3.select("."+key).transition().style("fill","rgb(50, 50, 255)");
       }
       catch(err) {
         console.log("hi")
@@ -166,7 +167,7 @@ function gradientsCrime(num, array) {
     }
     else if(neighborhoods[key] >= 30) {
       try {
-        d3.select("."+key).style("fill","rgb(0, 0, 255)");
+        d3.select("."+key).transition().style("fill","rgb(0, 0, 255)");
       }
       catch(err) {
         console.log("hi")
@@ -177,7 +178,6 @@ function gradientsCrime(num, array) {
 
 function gradientsPermits(num, array) {
   permits = [];
-  console.log(array);
   for(i = 0; i < array.length;i++) {
     if(arrays[i] != undefined) {
       if(parseInt(arrays[i].Year) == num) {  
@@ -190,11 +190,10 @@ function gradientsPermits(num, array) {
       }
     }
   }
-  console.log(permits);
   for(var key in permits) {
     if(permits[key] < 5) {
       try {
-        d3.select("."+key).style("fill","rgb(200, 200, 255)");
+        d3.select("."+key).transition().style("fill","rgb(200, 200, 255)");
       }
       catch(err) {
         console.log("hi")
@@ -202,7 +201,7 @@ function gradientsPermits(num, array) {
     }
     else if(permits[key] >= 5 && permits[key] < 10) {
       try {
-        d3.select("."+key).style("fill","rgb(150, 150, 255)");
+        d3.select("."+key).transition().style("fill","rgb(150, 150, 255)");
       }
       catch(err) {
         console.log("hi")
@@ -210,7 +209,7 @@ function gradientsPermits(num, array) {
     }
     else if(permits[key] >= 10 && permits[key] < 20) {
       try {
-        d3.select("."+key).style("fill","rgb(100, 100, 255)");
+        d3.select("."+key).transition().style("fill","rgb(100, 100, 255)");
       }
       catch(err) {
         console.log("hi")
@@ -218,7 +217,7 @@ function gradientsPermits(num, array) {
     }  
     else if(permits[key] >= 20 && permits[key] < 30) {
       try {
-        d3.select("."+key).style("fill","rgb(50, 50, 255)");
+        d3.select("."+key).transition().style("fill","rgb(50, 50, 255)");
       }
       catch(err) {
         console.log("hi")
@@ -226,7 +225,7 @@ function gradientsPermits(num, array) {
     }
     else if(permits[key] >= 30) {
       try {
-        d3.select("."+key).style("fill","rgb(0, 0, 255)");
+        d3.select("."+key).transition().style("fill","rgb(0, 0, 255)");
       }
       catch(err) {
         console.log("hi")
@@ -242,7 +241,6 @@ function loadLandPermits(svg) {
             lpermits.push({ "Address": d["Address"], "Applicant Name": d["Applicant Name"], "Neighborhood Calculated": d["Neighborhood Calculated"], 
               "Issue Date": d["Issue Date"], "Latitude": d["Latitude"], "Longitude": d["Longitude"], "Application Date" : d["Application Date"]});
         });
-        console.log(lpermits)
     });
     return lpermits;
 }
@@ -254,7 +252,6 @@ function loadCulture(svg) {
             cpermits.push({ "Name": d["Name"], "Constiuents": d["Constiuents"], "Location": d["Location"], "Neighborhood": d["Neighborhood"],  "Year Occupied": d["Year Occupied"],
               "Own or Rent": d["Own or Rent"], "Parking Spaces": d["Parking Spaces"], "Square Feet": d["Square Feet"], "Type" : d["Type"]});
         });
-        console.log(cpermits)
     });
     return cpermits;
 }
@@ -282,4 +279,24 @@ function clicked(d) {
       .duration(750)
       .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
       .style("stroke-width", 1.5 / k + "px");
+}
+
+var playing = false; 
+
+function play() {
+  if(playing == true) {
+    return;
+  }
+  playing = true;
+  var index = start;
+  var timer = setInterval(function() {
+    document.getElementById("year").innerHTML = "Year: " + index;
+    gradientsCrime(index, arrays);
+    index++;
+    if(index > end) {
+      playing = false;
+      clearInterval(timer);
+    }
+  } , 1000)
+
 }

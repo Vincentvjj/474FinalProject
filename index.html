@@ -2,6 +2,7 @@
 <meta charset="utf-8">
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
   <link rel="stylesheet" href="/d3.slider.css" />  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <style>
@@ -83,13 +84,16 @@ td .tooltip {
   <h1 align="middle" style="color: darkblue;">Gentrification of Seattle</h1>
 </head>
 <body>
-  
   <table>
 
     <td style="vertical-align: top">
       <div id="slider-range"></div>
-       <!-- Insert graph here and the checkboxes -->
+      <br>
+      <div id="year">Year: 2010</div>
     </td>
+    <button  type="button" class="btn btn-primary" onclick="play()" id="playButton">Play</button>
+    <br>
+    <br>
     <td class="chart" style="text-align: center;">
     </td>
 
