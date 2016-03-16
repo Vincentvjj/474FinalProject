@@ -4,6 +4,9 @@ var width = 600,
 
 
 var arrays = loadCrimes(svg);
+var arraysLand = loadLandPermits(svg);
+var array2 = loadPermits(svg);
+var culture = loadCulture(svg);
 
 var projection = d3.geo.albers()
     .center([0, 47.6097])
@@ -89,12 +92,11 @@ d3.json("Neighborhoods.json", function(error, neigh) {
     .attr("class", function(d) { if(d.properties.S_HOOD == "OOO") {return "collection-bad";} else {return "collection-label " + d.properties.S_HOOD;}})
     .attr("transform", function(d) { return "translate(" + path.centroid(d) + ")"; })
     .attr("dy", ".35em");
-    gradientsCrime(2015,crimes)
+    gradientsCrime(2015,crimes);
+
 });
 
-arrays2 = loadPermits(svg);
-landPermits = loadLandPermits(svg);
-culture = loadCulture(svg);
+
 
 
 function crimeGraph(neighborhood) {
@@ -199,13 +201,13 @@ function gradientsCrime(num, array) {
 function gradientsPermits(num, array) {
   permits = [];
   for(i = 0; i < array.length;i++) {
-    if(arrays[i] != undefined) {
-      if(parseInt(arrays[i].Year) == num) {  
-        if(permits[arrays[i].Neighborhood] == undefined) {
-          permits[arrays[i].Neighborhood] = 1;
+    if(array2[i] != undefined) {
+      if(parseInt(array2[i].Year) == num) {  
+        if(permits[array2[i].Neighborhood] == undefined) {
+          permits[array2[i].Neighborhood] = 1;
         }
         else {
-          permits[arrays[i].Neighborhood] = permits[arrays[i].Neighborhood] + 1;
+          permits[array2[i].Neighborhood] = permits[array2[i].Neighborhood] + 1;
         }
       }
     }
@@ -258,8 +260,8 @@ function loadLandPermits(svg) {
   lpermits = [];
     d3.tsv("data/Land_Use_Permits.txt", function(data) {
         data.forEach(function(d) {
-            lpermits.push({ "Address": d["Address"], "Applicant Name": d["Applicant Name"], "NeighborhoodCalculated": d["Neighborhood Calculated"].replace(/\s+/g, ''), 
-               "Latitude": d["Latitude"], "Longitude": d["Longitude"], "ApplicationDate" : "20"+d["Application Date"].substring(d["Application Date"].length-2)});
+            lpermits.push({  "NeighborhoodCalculated": d["Neighborhood Calculated"].replace(/\s+/g, ''), 
+                "ApplicationDate" : "20"+d["Application Date"].substring(d["Application Date"].length-2)});
         });
     });
         //gradientsLandPermits(2015,lpermits);
@@ -268,13 +270,15 @@ function loadLandPermits(svg) {
 
 function gradientsLandPermits(num, array) {
   land = [];
-  for(i = 0; i < array.length;i++) {
-    if(parseInt(arrays[i].Year) == num)  
-      if(land[arrays[i].NeighborhoodCalculated] == undefined) {
-        land[arrays[i].NeighborhoodCalculated] = 1;
+  console.log(arraysLand.length);
+  for(i = 0; i < arraysLand.length;i++) {
+    console.log("land");
+    if(parseInt(arraysLand[i].ApplicationDate) == num)  
+      if(land[arraysLand[i].NeighborhoodCalculated] == undefined) {
+        land[arraysLand[i].NeighborhoodCalculated] = 1;
       }
       else {
-        land[arrays[i].NeighborhoodCalculated] = land[arrays[i].NeighborhoodCalculated] + 1;
+        land[arraysLand[i].NeighborhoodCalculated] = land[arraysLand[i].NeighborhoodCalculated] + 1;
       }
   }
   for(var key in land) {
@@ -325,7 +329,7 @@ function loadCulture(svg) {
   cpermits = [];
     d3.tsv("data/Seattle_Cultural_Space_Inventory-3.txt", function(data) {
         data.forEach(function(d) {
-            cpermits.push({ "Name": d["Name"], "Constiuents": d["Constiuents"], "Location": d["Location"], "Neighborhood": d["Neighborhood"].replace(/\s+/g, ''),  "Year Occupied": d["Year Occupied"],
+            cpermits.push({ "Name": d["Name"], "Constiuents": d["Constiuents"], "Location": d["Location"], "Neighborhood": d["Neighborhood"].replace(/\s+/g, ''),  "Year": d["Year Occupied"],
               "Own or Rent": d["Own or Rent"], "Parking Spaces": d["Parking Spaces"], "Square Feet": d["Square Feet"], "Type" : d["Type"]});
         });
     });
@@ -334,18 +338,23 @@ function loadCulture(svg) {
 }
 function gradientsCulture(num, array) {
   cult = [];
-  console.log("???");
-  for(i = 0; i < array.length;i++) {
-    if(parseInt(arrays[i].Year) == num)  
-      if(cult[arrays[i].Neighborhood] == undefined) {
-        cult[arrays[i].Neighborhood] = 1;
+  console.log("Start");
+  for(i = 0; i < culture.length;i++) {
+
+    if(parseInt(culture[i].Year) == num){  
+      if(cult[culture[i].Neighborhood] == undefined) {
+        cult[culture[i].Neighborhood] = 1;
       }
       else {
-        cult[arrays[i].Neighborhood] = cult[arrays[i].Neighborhood] + 1;
+        cult[culture[i].Neighborhood] = culture[arrays[i].Neighborhood] + 1;
       }
+    } else {
+      //not this year
+    }
   }
   for(var key in cult) {
-    if(cult[key] < 5) {
+    console.log(cult[key]);
+    if(cult[key] < 1) {
       try {
         d3.select("."+key).transition().style("fill","rgb(200, 200, 255)");
       }
@@ -353,7 +362,7 @@ function gradientsCulture(num, array) {
         console.log("hi")
       }
     }
-    else if(cult[key] >= 5 && cult[key] < 10) {
+    else if(cult[key] >= 1 && cult[key] < 2) {
       try {
         d3.select("."+key).transition().style("fill","rgb(150, 150, 255)");
       }
@@ -361,7 +370,7 @@ function gradientsCulture(num, array) {
         console.log("hi")
       }
     }
-    else if(cult[key] >= 10 && cult[key] < 20) {
+    else if(cult[key] >= 2 && cult[key] < 3) {
       try {
         d3.select("."+key).transition().style("fill","rgb(100, 100, 255)");
       }
@@ -369,7 +378,7 @@ function gradientsCulture(num, array) {
         console.log("hi")
       }
     }  
-    else if(cult[key] >= 20 && cult[key] < 30) {
+    else if(cult[key] >= 3 && cult[key] < 4) {
       try {
         d3.select("."+key).transition().style("fill","rgb(50, 50, 255)");
       }
@@ -377,7 +386,7 @@ function gradientsCulture(num, array) {
         console.log("hi")
       }
     }
-    else if(cult[key] >= 30) {
+    else if(cult[key] >= 4) {
       try {
         d3.select("."+key).transition().style("fill","rgb(0, 0, 255)");
       }
