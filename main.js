@@ -585,7 +585,7 @@ function cultureClick() {
 
       legend.append("stop").attr("offset", "0%").attr("stop-color", "#0000ff").attr("stop-opacity", 1);
 
-      legend.append("stop").attr("offset", "100%").attr("stop-color", "#c8c8ff").attr("stop-opacity", 1);
+      legend.append("stop").attr("offset", "100%").attr("stop-color", "#ffeeaa").attr("stop-opacity", 1);
 
       key.append("rect").attr("width", w - 100).attr("height", h - 100).style("fill", "url(#gradient)").attr("transform", "translate(0,10)");
 
@@ -594,4 +594,4 @@ function cultureClick() {
       var yAxis = d3.svg.axis().scale(y).orient("right");
 
       key.append("g").attr("class", "y axis").attr("transform", "translate(41,10)").call(yAxis).append("text").attr("transform", "rotate(-90)").attr("y", 30).attr("dy", ".71em").style("text-anchor", "end").text("Number of Occurrences");
-
+      
