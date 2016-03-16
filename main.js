@@ -112,6 +112,7 @@ function crimeGraph(neighborhood) {
       }  
     }     
   }
+  console.log(crimes);
   return crimes;    
 }
 
@@ -135,7 +136,7 @@ function lpermitGraph(neighborhood) {
   lpermits = {};
   lpermitsforArea = [];
   for(i = 0; i < arraysLand.length;i++) {
-    if(arraysLand[i].Neighborhood == neighborhood.replace(/\s+/g, '')) {
+    if(arraysLand[i].NeighborhoodCalculated == neighborhood.replace(/\s+/g, '')) {
       if(lpermits[arraysLand[i].ApplicationDate] == null) {
         lpermits[arraysLand[i].ApplicationDate] = 1;  
       }
@@ -446,7 +447,7 @@ function gradientsCulture(num, array) {
 }
 
 function graph(dataTemp, ylabel, xlabel, gclass){
-d3.select(".chart2").selectAll("*").remove();
+d3.select(gclass).selectAll("*").remove();
  // console.log(data);
   //console.log(data[2012]);
 
@@ -522,14 +523,14 @@ var data = [
 function clicked(d) {
 
   var x, y, k;
-  var array = crimeGraph(d.properties["S_HOOD"]);
-  graph(array, "Relative Number of Crimes", "Year", ".chart2");
-  var array = permitGraph(d.properties["S_HOOD"]);
-  graph(array, "Building Permits", "Year", ".chart3");
-  var array = lpermitGraph(d.properties["S_HOOD"]);
-  graph(array, "Land Use Permits", "Year", ".chart4");
-  var array = cultureGraph(d.properties["S_HOOD"]);
-  graph(array, "Cultural Insititions Moved Into Buildings", "Year", ".chart5");
+  var array1 = crimeGraph(d.properties["S_HOOD"]);
+  graph(array1, "Relative Number of Crimes", "Year", ".chart2");
+  var array2 = permitGraph(d.properties["S_HOOD"]);
+  graph(array2, "Building Permits", "Year", ".chart3");
+  var array3 = lpermitGraph(d.properties["S_HOOD"]);
+  graph(array3, "Land Use Permits", "Year", ".chart4");
+  var array4 = cultureGraph(d.properties["S_HOOD"]);
+  graph(array4, "Cultural Insititions Moved Into Buildings", "Year", ".chart5");
 
 }
 
