@@ -100,7 +100,8 @@ function crimeGraph(neighborhood) {
   crimeforArea = [];
   for(i = 0; i < arrays.length;i++) {
     if(arrays[i].Neighborhood == neighborhood.replace(/\s+/g, '')) {
-      if(crimes.indexOf(arrays[i].Crime) == -1) {
+      if(crimes[arrays[i].Crime] == null) {
+        console.log(arrays[i]);
         crimes[arrays[i].Crime] = 1;  
       }
       else {
