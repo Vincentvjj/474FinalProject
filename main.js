@@ -2,6 +2,9 @@ var width = 600,
     height = 800,
     centered;
 
+
+var arrays = loadCrimes(svg);
+
 var projection = d3.geo.albers()
     .center([0, 47.6097])
     .rotate([122.3331, 0])
@@ -88,11 +91,26 @@ d3.json("Neighborhoods.json", function(error, neigh) {
     .attr("dy", ".35em");
 });
 
-arrays = loadCrimes(svg);
 arrays2 = loadPermits(svg);
 landPermits = loadLandPermits(svg);
 culture = loadCulture(svg);
 
+function crimeGraph(neighborhood) {
+  crimes = [];
+  crimeforArea = [];
+  for(i = 0; i < arrays.length;i++) {
+    if(arrays[i].Neighborhood == neighborhood.replace(/\s+/g, '')) {
+      if(crimes.indexOf(arrays[i].Crime) == -1) {
+        crimes[arrays[i].Crime] = 1;  
+      }
+      else {
+        console.log("HIAHIAHAI");
+        crimes[arrays[i].Crime] = crimes[arrays[i].Crime] + 1;    
+      }  
+    }     
+  }
+  console.log(crimes);     
+}
 
 function loadCrimes() {
 	crimes = [];
@@ -369,7 +387,7 @@ function gradientsCulture(num, array) {
 
 function clicked(d) {
   var x, y, k;
-
+  var array = crimeGraph(d.properties["S_HOOD"]);
   if (d && centered !== d) {
     var centroid = path.centroid(d);
     x = centroid[0];
