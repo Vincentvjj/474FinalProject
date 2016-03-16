@@ -14,6 +14,24 @@
   stroke-width: .80px;
 }
 
+.bar {
+  fill: steelblue;
+}
+
+.axis text {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
 
 .collection-label {
   fill: #777;
@@ -107,7 +125,7 @@ td .tooltip {
 
 
   </table>
-
+<svg class="chart"></svg>
 </body>
 
 
