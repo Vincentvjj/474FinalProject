@@ -89,11 +89,13 @@ d3.json("Neighborhoods.json", function(error, neigh) {
     .attr("class", function(d) { if(d.properties.S_HOOD == "OOO") {return "collection-bad";} else {return "collection-label " + d.properties.S_HOOD;}})
     .attr("transform", function(d) { return "translate(" + path.centroid(d) + ")"; })
     .attr("dy", ".35em");
+    gradientsCrime(2015,crimes)
 });
 
 arrays2 = loadPermits(svg);
 landPermits = loadLandPermits(svg);
 culture = loadCulture(svg);
+
 
 function crimeGraph(neighborhood) {
   crimes = {};
@@ -113,13 +115,14 @@ function crimeGraph(neighborhood) {
 
 function loadCrimes() {
 	crimes = [];
+  console.log("loadcrimes");
     d3.csv("crimes2.csv", function(data) {
         data.forEach(function(d) {
             var str = d["Neighborhood"].replace(/\s+/g, '');
             crimes.push({ "Crime": d["Crime"], "Latitude": d["Latitude"], "Longitude": d["Longitude"], "Year" : d["Year"], "Neighborhood" : str});
         });  
 
-        gradientsCrime(2015,crimes)
+        //gradientsCrime(2015,crimes)
     });
     return crimes;
 }
@@ -155,7 +158,7 @@ function gradientsCrime(num, array) {
         d3.select("."+key).transition().style("fill","rgb(200, 200, 255)");
       }
       catch(err) {
-        console.log("hi")
+        console.log(err)
       }
     }
     else if(neighborhoods[key] >= 5 && neighborhoods[key] < 10) {
@@ -259,7 +262,7 @@ function loadLandPermits(svg) {
                "Latitude": d["Latitude"], "Longitude": d["Longitude"], "ApplicationDate" : "20"+d["Application Date"].substring(d["Application Date"].length-2)});
         });
     });
-        gradientsLandPermits(2015,lpermits);
+        //gradientsLandPermits(2015,lpermits);
     return lpermits;
 }
 
@@ -326,11 +329,12 @@ function loadCulture(svg) {
               "Own or Rent": d["Own or Rent"], "Parking Spaces": d["Parking Spaces"], "Square Feet": d["Square Feet"], "Type" : d["Type"]});
         });
     });
-    gradientsCulture(2015,lpermits);
+    //gradientsCulture(2015,lpermits);
     return cpermits;
 }
 function gradientsCulture(num, array) {
   cult = [];
+  console.log("???");
   for(i = 0; i < array.length;i++) {
     if(parseInt(arrays[i].Year) == num)  
       if(cult[arrays[i].Neighborhood] == undefined) {
@@ -385,6 +389,7 @@ function gradientsCulture(num, array) {
 }
 
 function clicked(d) {
+
   var x, y, k;
   var array = crimeGraph(d.properties["S_HOOD"]);
   console.log(array)
