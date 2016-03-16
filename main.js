@@ -120,8 +120,7 @@ function loadCrimes() {
             var str = d["Neighborhood"].replace(/\s+/g, '');
             crimes.push({ "Crime": d["Crime"], "Latitude": d["Latitude"], "Longitude": d["Longitude"], "Year" : d["Year"], "Neighborhood" : str});
         });  
-
-        gradientsCrime(2015,crimes)
+        gradientsCrime(2010,crimes);
     });
     return crimes;
 }
