@@ -100,21 +100,19 @@ d3.json("Neighborhoods.json", function(error, neigh) {
 
 
 function crimeGraph(neighborhood) {
-  crimes = [];
+  crimes = {};
   crimeforArea = [];
   for(i = 0; i < arrays.length;i++) {
     if(arrays[i].Neighborhood == neighborhood.replace(/\s+/g, '')) {
-      if(crimes[arrays[i].Crime] == null) {
-        console.log(arrays[i]);
-        crimes[arrays[i].Crime] = 1;  
+      if(crimes[arrays[i].Year] == null) {
+        crimes[arrays[i].Year] = 1;  
       }
       else {
-        console.log("HIAHIAHAI");
-        crimes[arrays[i].Crime] = crimes[arrays[i].Crime] + 1;    
+        crimes[arrays[i].Year] = crimes[arrays[i].Year] + 1;    
       }  
     }     
   }
-  console.log(crimes);     
+  return crimes;    
 }
 
 function loadCrimes() {
@@ -403,6 +401,7 @@ function clicked(d) {
 
   var x, y, k;
   var array = crimeGraph(d.properties["S_HOOD"]);
+  console.log(array)
   if (d && centered !== d) {
     var centroid = path.centroid(d);
     x = centroid[0];
