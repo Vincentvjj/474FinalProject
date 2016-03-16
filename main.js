@@ -74,9 +74,7 @@ d3.json("Neighborhoods.json", function(error, neigh) {
           return;
         }
 
-        d3.select(this.parentNode.appendChild(this)).transition().duration(100)
-        .style({'stroke-opacity':3,'stroke':'black'});
-
+        
         var mouse = d3.mouse(svg.node()).map(function(d) {
           return parseInt(d);
         });
@@ -84,20 +82,12 @@ d3.json("Neighborhoods.json", function(error, neigh) {
           .attr('style', 'left:' + (mouse[0] + 750) + 'px; top:' + (mouse[1] + 40) + 'px')
           .html(d.properties.S_HOOD);
       }).on("mouseout", function(d) {
-        d3.select(this.parentNode.appendChild(this)).transition().duration(100)
-        .style({'stroke-opacity':.8,'stroke':'#777'});
+        // d3.select(this.parentNode.appendChild(this)).transition().duration(100)
+        // .style({'stroke-opacity':.8,'stroke':'#777'});
 
         tooltip.classed('hidden', true); 
       });
 
-     
-  g.append("g")
-  .selectAll(".subunit-label")
-    .data(topojson.feature(neigh, neigh.objects.collection).features)
-  .enter().append("text")
-    .attr("class", function(d) { if(d.properties.S_HOOD == "OOO") {return "collection-bad";} else {return "collection-label " + d.properties.S_HOOD;}})
-    .attr("transform", function(d) { return "translate(" + path.centroid(d) + ")"; })
-    .attr("dy", ".35em");
     gradientsCrime(2010,crimes);
 
 });
@@ -118,7 +108,56 @@ function crimeGraph(neighborhood) {
       }  
     }     
   }
+  console.log(crimes);
   return crimes;    
+}
+
+function permitGraph(neighborhood) {
+  permits = {};
+  permitsforArea = [];
+  for(i = 0; i < array2.length;i++) {
+    if(array2[i].Neighborhood == neighborhood.replace(/\s+/g, '')) {
+      if(permits[array2[i].Year] == null) {
+        permits[array2[i].Year] = 1;  
+      }
+      else {
+        permits[array2[i].Year] = permits[array2[i].Year] + 1;    
+      }  
+    }     
+  }
+  return permits;    
+}
+
+function lpermitGraph(neighborhood) {
+  lpermits = {};
+  lpermitsforArea = [];
+  for(i = 0; i < arraysLand.length;i++) {
+    if(arraysLand[i].NeighborhoodCalculated == neighborhood.replace(/\s+/g, '')) {
+      if(lpermits[arraysLand[i].ApplicationDate] == null) {
+        lpermits[arraysLand[i].ApplicationDate] = 1;  
+      }
+      else {
+        lpermits[arraysLand[i].ApplicationDate] = lpermits[arraysLand[i].ApplicationDate] + 1;    
+      }  
+    }     
+  }
+  return lpermits;    
+}
+
+function cultureGraph(neighborhood) {
+  cults = {};
+  cultpermitsforArea = [];
+  for(i = 0; i < culture.length;i++) {
+    if(culture[i].Neighborhood == neighborhood.replace(/\s+/g, '')) {
+      if(cults[culture[i].Year] == null) {
+        cults[culture[i].Year] = 1;  
+      }
+      else {
+        cults[culture[i].Year] = cults[culture[i].Year] + 1;    
+      }  
+    }     
+  }
+  return cults;    
 }
 
 function loadCrimes() {
@@ -403,68 +442,99 @@ function gradientsCulture(num, array) {
   }
 }
 
-function graph(data) {
-  var width1 = 500,
-      height1 = 300;
+function graph(dataTemp, ylabel, xlabel, gclass){
+d3.select(gclass).selectAll("*").remove();
+ // console.log(data);
+  //console.log(data[2012]);
 
-  var y = d3.scale.linear()
-      .range([height1, 0]);
+  //var data = [dataTemp[2010], dataTemp[2011], dataTemp[2012], dataTemp[2013], dataTemp[2014],, dataTemp[2015]];
 
-  var chart = d3.select(".chart")
-      .attr("width", width1)
-      .attr("height", height1);
+var margin = {top: 20, right: 30, bottom: 60, left: 60},
+    width = 360 - margin.left - margin.right,
+    height = 220 - margin.top - margin.bottom,
+    padding = 20;
 
+var x = d3.scale.ordinal()
+    .rangeRoundBands([0, width], .1);
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left");
+
+var chart = d3.select(gclass)
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var data = [
+  {name: "2010",    value:  dataTemp[2010]},
+  {name: "2011",    value:  dataTemp[2011]},
+  {name: "2012",     value: dataTemp[2012]},
+  {name: "2013",   value: dataTemp[2013]},
+  {name: "2014", value: dataTemp[2014]},
+  {name: "2015",     value: dataTemp[2015]}
+];
+  x.domain(data.map(function(d) { return d.name; }));
   y.domain([0, d3.max(data, function(d) { return d.value; })]);
 
-  var barWidth = width1 / data.length;
+  chart.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
 
-  var bar = svg.selectAll("g")
+  chart.append("g")
+      .attr("class", "y axis")
+      .call(yAxis);
+
+  chart.selectAll(".bar")
       .data(data)
-    .enter().append("g")
-      .attr("transform", function(d, i) { return "translate(" + i * barWidth + ",0)"; });
-
-  bar.append("rect")
+    .enter().append("rect")
+      .attr("class", "bar")
+      .attr("x", function(d) { return x(d.name); })
       .attr("y", function(d) { return y(d.value); })
-      .attr("height", function(d) { return height1 - y(d.value); })
-      .attr("width", barWidth - 1);
+      .attr("height", function(d) { return height - y(d.value); })
+      .attr("width", x.rangeBand());
 
-  bar.append("text")
-      .attr("x", barWidth / 2)
-      .attr("y", function(d) { return y(d.value) + 3; })
-      .attr("dy", ".75em")
-      .text(function(d) { return d.value; });
+  chart.append("text")
+            .attr("text-anchor", "middle") 
+            .attr("transform", "translate("+ (padding/2) +","+(height/2)+")rotate(-90)")  
+            .text(ylabel);
 
-  function type(d) {
-    d.value = +d.value; // coerce to number
-    return d;
-  }
+  chart.append("text")
+      .attr("text-anchor", "middle")  
+      .attr("transform", "translate("+ (width/2) +","+(height-(padding/3))+")")  
+      .text(xlabel);
 }
+
+
 
 function clicked(d) {
 
-  var x, y, k;
-  var array = crimeGraph(d.properties["S_HOOD"]);
-  graph(array)
-  if (d && centered !== d) {
-    var centroid = path.centroid(d);
-    x = centroid[0];
-    y = centroid[1];
-    k = 4;
-    centered = d;
-  } else {
-    x = width / 2;
-    y = height / 2;
-    k = 1;
-    centered = null;
-  }
+  d3.selectAll(".collection").style({'stroke-opacity':.8,'stroke':'#777'});
 
-  g.selectAll("path")
-      .classed("active", centered && function(d) { return d === centered; });
 
-  g.transition().duration(1000)
-      .duration(750)
-      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
-      .style("stroke-width", 1.5 / k + "px");
+  d3.select(this.parentNode.appendChild(this)).transition().duration(100)
+        .style({'stroke-opacity':3,'stroke':'black'});
+
+  var array1 = crimeGraph(d.properties["S_HOOD"]);
+  graph(array1, "Relative Number of Crimes", "Year", ".chart2");
+  var array2 = permitGraph(d.properties["S_HOOD"]);
+  graph(array2, "Building Permits", "Year", ".chart3");
+  var array3 = lpermitGraph(d.properties["S_HOOD"]);
+  graph(array3, "Land Use Permits", "Year", ".chart4");
+  var array4 = cultureGraph(d.properties["S_HOOD"]);
+  graph(array4, "Cultural Insititions Moved Into Buildings", "Year", ".chart5");
+
+
+  document.getElementById("areaName").innerHTML = "Area: " + d.properties.S_HOOD;
 }
 
 var playing = false; 

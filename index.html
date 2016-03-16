@@ -33,6 +33,15 @@
   display: none;
 }
 
+.collection-h-label {
+  display: none;  
+  fill: #777;
+  fill-opacity: .5;
+  font-size: 8px;
+  font-weight: 300;
+  text-anchor: middle;
+}
+
 .collection-label {
   fill: #777;
   fill-opacity: .5;
@@ -94,6 +103,32 @@ td .tooltip {
 .q7-9 { fill:rgb(8,81,156); }
 .q8-9 { fill:rgb(8,48,107); }
 
+
+
+
+
+
+
+.bar {
+  fill: steelblue;
+}
+
+.axis text {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+}
+
+
+
 </style>
 
 
@@ -130,7 +165,12 @@ td .tooltip {
 
 
   </table>
-<svg class="chart"></svg>
+
+<div style="font-size:20px; text-align:center;"id="areaName"></div>
+<svg class="chart2"></svg>
+<svg class="chart3"></svg>
+<svg class="chart4"></svg>
+<svg class="chart5"></svg>
 </body>
 
 
