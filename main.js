@@ -1,12 +1,12 @@
 var width = 600,
-    height = 800,
+    height = 600,
     centered;
 
 var projection = d3.geo.albers()
     .center([0, 47.6097])
     .rotate([122.3331, 0])
     .parallels([50, 60])
-    .scale(1200 * 5 * 30)
+    .scale(950 * 5 * 30)
     .translate([width / 2, height / 2]);
 
 var path = d3.geo.path()
@@ -72,7 +72,7 @@ d3.json("Neighborhoods.json", function(error, neigh) {
           return parseInt(d);
         });
         tooltip.classed('hidden', false)
-          .attr('style', 'left:' + (mouse[0] + 880) + 'px; top:' + (mouse[1] + 40) + 'px')
+          .attr('style', 'left:' + (mouse[0] + 750) + 'px; top:' + (mouse[1] + 40) + 'px')
           .html(d.properties.S_HOOD);
       }).on("mouseout", function() {
         tooltip.classed('hidden', true); 
