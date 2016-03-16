@@ -388,11 +388,48 @@ function gradientsCulture(num, array) {
   }
 }
 
+function graph(data) {
+  var width1 = 500,
+      height1 = 300;
+
+  var y = d3.scale.linear()
+      .range([height1, 0]);
+
+  var chart = d3.select(".chart")
+      .attr("width", width1)
+      .attr("height", height1);
+
+  y.domain([0, d3.max(data, function(d) { return d.value; })]);
+
+  var barWidth = width1 / data.length;
+
+  var bar = svg.selectAll("g")
+      .data(data)
+    .enter().append("g")
+      .attr("transform", function(d, i) { return "translate(" + i * barWidth + ",0)"; });
+
+  bar.append("rect")
+      .attr("y", function(d) { return y(d.value); })
+      .attr("height", function(d) { return height1 - y(d.value); })
+      .attr("width", barWidth - 1);
+
+  bar.append("text")
+      .attr("x", barWidth / 2)
+      .attr("y", function(d) { return y(d.value) + 3; })
+      .attr("dy", ".75em")
+      .text(function(d) { return d.value; });
+
+  function type(d) {
+    d.value = +d.value; // coerce to number
+    return d;
+  }
+}
+
 function clicked(d) {
 
   var x, y, k;
   var array = crimeGraph(d.properties["S_HOOD"]);
-  console.log(array)
+  graph(array)
   if (d && centered !== d) {
     var centroid = path.centroid(d);
     x = centroid[0];
