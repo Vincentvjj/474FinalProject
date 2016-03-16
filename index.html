@@ -2,7 +2,7 @@
 <meta charset="utf-8">
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
   <link rel="stylesheet" href="/d3.slider.css" />  
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <style>
@@ -109,12 +109,17 @@ td .tooltip {
         <div id="slider-range"></div>
       </div>
 
-      <div>
-        
-        
+      <div style="margin-top: 100px;">
+        <h2>Factors</h2>
+        <form action="" style="margin-left: 10px">
+          <input type="radio" name="data" value="male" checked="true" onclick="crimeClick()"> Crime<br>
+          <input type="radio" name="data" value="female" onclick="permitsClick()"> Permits<br>
+          <input type="radio" name="data" value="other" onclick="landClick()"> Land Permits<br>
+          <input type="radio" name="data" value="other" onclick="cultureClick()"> Culture<br>
+        </form>
       </div>
     </td>
-    <button type="button" class="btn btn-primary" onclick="play()" id="playButton">Play</button>
+    <button style="margin-left:10px" type="button" class="btn btn-primary" onclick="play()" id="playButton">Play</button>
     <br>
     <br>
     <td class="chart" style="text-align: center;">
