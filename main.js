@@ -1,5 +1,5 @@
 var width = 600,
-    height = 800,
+    height = 600,
     centered;
 
 
@@ -12,7 +12,7 @@ var projection = d3.geo.albers()
     .center([0, 47.6097])
     .rotate([122.3331, 0])
     .parallels([50, 60])
-    .scale(1200 * 5 * 30)
+    .scale(950 * 5 * 30)
     .translate([width / 2, height / 2]);
 
 var path = d3.geo.path()
@@ -74,25 +74,21 @@ d3.json("Neighborhoods.json", function(error, neigh) {
           return;
         }
 
+        
         var mouse = d3.mouse(svg.node()).map(function(d) {
           return parseInt(d);
         });
         tooltip.classed('hidden', false)
-          .attr('style', 'left:' + (mouse[0] + 880) + 'px; top:' + (mouse[1] + 40) + 'px')
+          .attr('style', 'left:' + (mouse[0] + 750) + 'px; top:' + (mouse[1] + 40) + 'px')
           .html(d.properties.S_HOOD);
-      }).on("mouseout", function() {
+      }).on("mouseout", function(d) {
+        // d3.select(this.parentNode.appendChild(this)).transition().duration(100)
+        // .style({'stroke-opacity':.8,'stroke':'#777'});
+
         tooltip.classed('hidden', true); 
       });
 
-     
-  g.append("g")
-  .selectAll(".subunit-label")
-    .data(topojson.feature(neigh, neigh.objects.collection).features)
-  .enter().append("text")
-    .attr("class", function(d) { if(d.properties.S_HOOD == "OOO") {return "collection-bad";} else {return "collection-label " + d.properties.S_HOOD;}})
-    .attr("transform", function(d) { return "translate(" + path.centroid(d) + ")"; })
-    .attr("dy", ".35em");
-    gradientsCrime(2015,crimes);
+    gradientsCrime(2010,crimes);
 
 });
 
@@ -206,7 +202,7 @@ function gradientsCrime(num, array) {
   for(var key in neighborhoods) {
     if(neighborhoods[key] < 5) {
       try {
-        d3.select("."+key).transition().style("fill","rgb(200, 200, 255)");
+        d3.select("."+key).transition().duration(1000).duration(500).style("fill","rgb(200, 200, 255)");
       }
       catch(err) {
         console.log(err)
@@ -214,7 +210,7 @@ function gradientsCrime(num, array) {
     }
     else if(neighborhoods[key] >= 5 && neighborhoods[key] < 10) {
       try {
-        d3.select("."+key).transition().style("fill","rgb(150, 150, 255)");
+        d3.select("."+key).transition().duration(1000).style("fill","rgb(150, 150, 255)");
       }
       catch(err) {
         console.log("hi")
@@ -222,7 +218,7 @@ function gradientsCrime(num, array) {
     }
     else if(neighborhoods[key] >= 10 && neighborhoods[key] < 20) {
       try {
-        d3.select("."+key).transition().style("fill","rgb(100, 100, 255)");
+        d3.select("."+key).transition().duration(1000).style("fill","rgb(100, 100, 255)");
       }
       catch(err) {
         console.log("hi")
@@ -230,7 +226,7 @@ function gradientsCrime(num, array) {
     }  
     else if(neighborhoods[key] >= 20 && neighborhoods[key] < 30) {
       try {
-        d3.select("."+key).transition().style("fill","rgb(50, 50, 255)");
+        d3.select("."+key).transition().duration(1000).style("fill","rgb(50, 50, 255)");
       }
       catch(err) {
         console.log("hi")
@@ -238,7 +234,7 @@ function gradientsCrime(num, array) {
     }
     else if(neighborhoods[key] >= 30) {
       try {
-        d3.select("."+key).transition().style("fill","rgb(0, 0, 255)");
+        d3.select("."+key).transition().duration(1000).style("fill","rgb(0, 0, 255)");
       }
       catch(err) {
         console.log("hi")
@@ -264,7 +260,7 @@ function gradientsPermits(num, array) {
   for(var key in permits) {
     if(permits[key] < 5) {
       try {
-        d3.select("."+key).transition().style("fill","rgb(200, 200, 255)");
+        d3.select("."+key).transition().duration(1000).style("fill","rgb(200, 200, 255)");
       }
       catch(err) {
         console.log("hi")
@@ -272,7 +268,7 @@ function gradientsPermits(num, array) {
     }
     else if(permits[key] >= 5 && permits[key] < 10) {
       try {
-        d3.select("."+key).transition().style("fill","rgb(150, 150, 255)");
+        d3.select("."+key).transition().duration(1000).style("fill","rgb(150, 150, 255)");
       }
       catch(err) {
         console.log("hi")
@@ -280,7 +276,7 @@ function gradientsPermits(num, array) {
     }
     else if(permits[key] >= 10 && permits[key] < 20) {
       try {
-        d3.select("."+key).transition().style("fill","rgb(100, 100, 255)");
+        d3.select("."+key).transition().duration(1000).style("fill","rgb(100, 100, 255)");
       }
       catch(err) {
         console.log("hi")
@@ -288,7 +284,7 @@ function gradientsPermits(num, array) {
     }  
     else if(permits[key] >= 20 && permits[key] < 30) {
       try {
-        d3.select("."+key).transition().style("fill","rgb(50, 50, 255)");
+        d3.select("."+key).transition().duration(1000).style("fill","rgb(50, 50, 255)");
       }
       catch(err) {
         console.log("hi")
@@ -296,7 +292,7 @@ function gradientsPermits(num, array) {
     }
     else if(permits[key] >= 30) {
       try {
-        d3.select("."+key).transition().style("fill","rgb(0, 0, 255)");
+        d3.select("."+key).transition().duration(1000).style("fill","rgb(0, 0, 255)");
       }
       catch(err) {
         console.log("hi")
@@ -333,7 +329,7 @@ function gradientsLandPermits(num, array) {
   for(var key in land) {
     if(land[key] < 5) {
       try {
-        d3.select("."+key).transition().style("fill","rgb(200, 200, 255)");
+        d3.select("."+key).transition().duration(1000).style("fill","rgb(200, 200, 255)");
       }
       catch(err) {
         console.log("hi")
@@ -341,7 +337,7 @@ function gradientsLandPermits(num, array) {
     }
     else if(land[key] >= 5 && land[key] < 10) {
       try {
-        d3.select("."+key).transition().style("fill","rgb(150, 150, 255)");
+        d3.select("."+key).transition().duration(1000).style("fill","rgb(150, 150, 255)");
       }
       catch(err) {
         console.log("hi")
@@ -349,7 +345,7 @@ function gradientsLandPermits(num, array) {
     }
     else if(land[key] >= 10 && land[key] < 20) {
       try {
-        d3.select("."+key).transition().style("fill","rgb(100, 100, 255)");
+        d3.select("."+key).transition().duration(1000).style("fill","rgb(100, 100, 255)");
       }
       catch(err) {
         console.log("hi")
@@ -357,7 +353,7 @@ function gradientsLandPermits(num, array) {
     }  
     else if(land[key] >= 20 && land[key] < 30) {
       try {
-        d3.select("."+key).transition().style("fill","rgb(50, 50, 255)");
+        d3.select("."+key).transition().duration(1000).style("fill","rgb(50, 50, 255)");
       }
       catch(err) {
         console.log("hi")
@@ -365,7 +361,7 @@ function gradientsLandPermits(num, array) {
     }
     else if(land[key] >= 30) {
       try {
-        d3.select("."+key).transition().style("fill","rgb(0, 0, 255)");
+        d3.select("."+key).transition().duration(1000).style("fill","rgb(0, 0, 255)");
       }
       catch(err) {
         console.log("hi")
@@ -405,7 +401,7 @@ function gradientsCulture(num, array) {
     console.log(cult[key]);
     if(cult[key] < 1) {
       try {
-        d3.select("."+key).transition().style("fill","rgb(200, 200, 255)");
+        d3.select("."+key).transition().duration(1000).style("fill","rgb(200, 200, 255)");
       }
       catch(err) {
         console.log("hi")
@@ -413,7 +409,7 @@ function gradientsCulture(num, array) {
     }
     else if(cult[key] >= 1 && cult[key] < 2) {
       try {
-        d3.select("."+key).transition().style("fill","rgb(150, 150, 255)");
+        d3.select("."+key).transition().duration(1000).style("fill","rgb(150, 150, 255)");
       }
       catch(err) {
         console.log("hi")
@@ -421,7 +417,7 @@ function gradientsCulture(num, array) {
     }
     else if(cult[key] >= 2 && cult[key] < 3) {
       try {
-        d3.select("."+key).transition().style("fill","rgb(100, 100, 255)");
+        d3.select("."+key).transition().duration(1000).style("fill","rgb(100, 100, 255)");
       }
       catch(err) {
         console.log("hi")
@@ -429,7 +425,7 @@ function gradientsCulture(num, array) {
     }  
     else if(cult[key] >= 3 && cult[key] < 4) {
       try {
-        d3.select("."+key).transition().style("fill","rgb(50, 50, 255)");
+        d3.select("."+key).transition().duration(1000).style("fill","rgb(50, 50, 255)");
       }
       catch(err) {
         console.log("hi")
@@ -437,7 +433,7 @@ function gradientsCulture(num, array) {
     }
     else if(cult[key] >= 4) {
       try {
-        d3.select("."+key).transition().style("fill","rgb(0, 0, 255)");
+        d3.select("."+key).transition().duration(1000).style("fill","rgb(0, 0, 255)");
       }
       catch(err) {
         console.log("hi")
@@ -522,7 +518,12 @@ var data = [
 
 function clicked(d) {
 
-  var x, y, k;
+  d3.selectAll(".collection").style({'stroke-opacity':.8,'stroke':'#777'});
+
+
+  d3.select(this.parentNode.appendChild(this)).transition().duration(100)
+        .style({'stroke-opacity':3,'stroke':'black'});
+
   var array1 = crimeGraph(d.properties["S_HOOD"]);
   graph(array1, "Relative Number of Crimes", "Year", ".chart2");
   var array2 = permitGraph(d.properties["S_HOOD"]);
@@ -532,6 +533,8 @@ function clicked(d) {
   var array4 = cultureGraph(d.properties["S_HOOD"]);
   graph(array4, "Cultural Insititions Moved Into Buildings", "Year", ".chart5");
 
+
+  document.getElementById("areaName").innerHTML = "Area: " + d.properties.S_HOOD;
 }
 
 var playing = false; 
@@ -546,13 +549,33 @@ function play() {
     document.getElementById("year").innerHTML = "Year: " + index;
     gradientsCrime(index, arrays);
     index++;
-    if(index > end) {
+    if(index > end + 1) {
+      gradientsCrime(start, arrays);
+      document.getElementById("year").innerHTML = "Year: " + start;
       playing = false;
       clearInterval(timer);
     }
-  } , 1000)
+  } , 1300)
 
 }
+
+function crimeClick() {
+  gradientsCrime(start, arrays);
+}
+
+function permitsClick() {
+  gradientsPermits(start, arrays);
+}
+
+function landClick() {
+  gradientsLandPermits(start, arrays);
+}
+
+function cultureClick() {
+  gradientsCulture(start, arrays);
+}
+
+
 //http://bl.ocks.org/darrenjaworski/5397362
       var w = 140, h = 400;
       //append elsewhere to make it fit well

@@ -2,7 +2,7 @@
 <meta charset="utf-8">
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
   <link rel="stylesheet" href="/d3.slider.css" />  
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <style>
@@ -31,6 +31,15 @@
 
 .x.axis path {
   display: none;
+}
+
+.collection-h-label {
+  display: none;  
+  fill: #777;
+  fill-opacity: .5;
+  font-size: 8px;
+  font-weight: 300;
+  text-anchor: middle;
 }
 
 .collection-label {
@@ -125,29 +134,39 @@ td .tooltip {
 
 <title>Gentrification</title>
 <head>
-  <h1 align="middle" style="color: darkblue;">Gentrification of Seattle</h1>
+  <h1 align="middle" style="color: darkblue; margin-top:0px; margin-bottom:0px;">Gentrification of Seattle</h1>
 </head>
 <body>
   <table>
 
     <td style="vertical-align: top">
-      <div id="slider-range"></div>
-      <br>
-      <div id="year">Year: 2010</div>
+      <div id="sliders">
+        <div id="slider-range"></div>
+      </div>
+
+      <div style="margin-top: 100px;">
+        <h2>Factors</h2>
+        <form action="" style="margin-left: 10px">
+          <input type="radio" name="data" value="male" checked="true" onclick="crimeClick()"> Crime<br>
+          <input type="radio" name="data" value="female" onclick="permitsClick()"> Permits<br>
+          <input type="radio" name="data" value="other" onclick="landClick()"> Land Permits<br>
+          <input type="radio" name="data" value="other" onclick="cultureClick()"> Culture<br>
+        </form>
+      </div>
     </td>
-    <button  type="button" class="btn btn-primary" onclick="play()" id="playButton">Play</button>
+    <button style="margin-left:10px" type="button" class="btn btn-primary" onclick="play()" id="playButton">Play</button>
     <br>
     <br>
     <td class="chart" style="text-align: center;">
-    </td>
-
-
+      <div style="font-size:20px;" id="year">Year: 2010</div>
     </td>
 
 
 
 
   </table>
+
+<div style="font-size:20px; text-align:center;"id="areaName"></div>
 <svg class="chart2"></svg>
 <svg class="chart3"></svg>
 <svg class="chart4"></svg>
