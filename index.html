@@ -144,14 +144,23 @@ td .tooltip {
         <div id="slider-range"></div>
       </div>
 
-      <div style="margin-top: 100px;">
-        <h2>Factors</h2>
-        <form action="" style="margin-left: 10px">
+      <div style="margin-top: 100px; text-align: right;">
+        <h2 style="margin-left: 80%; text-align: left">Factors</h2>
+        <form action="" style="margin-left: 80%; text-align: left">
           <input type="radio" name="data" value="male" checked="true" onclick="crimeClick()"> Crime<br>
-          <input type="radio" name="data" value="female" onclick="permitsClick()"> Permits<br>
+          <input type="radio" name="data" value="female" onclick="permitsClick()"> Building Permits<br>
           <input type="radio" name="data" value="other" onclick="landClick()"> Land Permits<br>
-          <input type="radio" name="data" value="other" onclick="cultureClick()"> Culture<br>
+          <input type="radio" name="data" value="other" onclick="cultureClick()"> Cultural Sites<br>
         </form>
+      </div>
+      <div>
+        <b><div style="font-size:20px;"id="areaName"></div></b>
+        <br>
+        <br>
+        <svg class="chart2"></svg>
+        <svg class="chart3"></svg>
+        <svg class="chart4"></svg>
+        <svg class="chart5"></svg>
       </div>
     </td>
     <button style="margin-left:10px" type="button" class="btn btn-primary" onclick="play()" id="playButton">Play</button>
@@ -166,11 +175,7 @@ td .tooltip {
 
   </table>
 
-<div style="font-size:20px; text-align:center;"id="areaName"></div>
-<svg class="chart2"></svg>
-<svg class="chart3"></svg>
-<svg class="chart4"></svg>
-<svg class="chart5"></svg>
+
 
 <div>
 </body>
