@@ -28,7 +28,6 @@ var start = 2010;
 var end = 2016;
 
 
-
 d3.select('#slider-range').call(d3.slider().scale(d3.time.scale()
     .domain([new Date(2009,1,1), new Date(2016,1,1)]))
     .axis( d3.svg.axis() ).snap(true).value([new Date(2010,1,1),new Date(2016,1,1)])
@@ -497,7 +496,8 @@ var data = [
   chart.selectAll(".bar")
       .data(data)
     .enter().append("rect")
-      .attr("class", "bar")
+      .attr({height: 0, class: 'bar'}).transition().duration(500)
+      .attr("class", "bar").transition()
       .attr("x", function(d) { return x(d.name); })
       .attr("y", function(d) { return y(d.value); })
       .attr("height", function(d) { return height - y(d.value); })
@@ -505,12 +505,12 @@ var data = [
 
   chart.append("text")
             .attr("text-anchor", "middle") 
-            .attr("transform", "translate("+ (padding/2) +","+(height/2)+")rotate(-90)")  
+            .attr("transform", "translate("+ (padding + 100) +","+(height - 152 )+")")  
             .text(ylabel);
 
   chart.append("text")
       .attr("text-anchor", "middle")  
-      .attr("transform", "translate("+ (width/2) +","+(height-(padding/3))+")")  
+      .attr("transform", "translate("+ (width/2) +","+(height + 30)+")")  
       .text(xlabel);
 }
 

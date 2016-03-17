@@ -29,10 +29,6 @@
   shape-rendering: crispEdges;
 }
 
-.x.axis path {
-  display: none;
-}
-
 .collection-h-label {
   display: none;  
   fill: #777;
@@ -124,8 +120,6 @@ td .tooltip {
   shape-rendering: crispEdges;
 }
 
-.x.axis path {
-}
 
 
 
@@ -142,10 +136,13 @@ td .tooltip {
     <td style="vertical-align: top">
       <div id="sliders">
         <div id="slider-range"></div>
+        <br>
+        <span style="color: gray; margin-left:10px">Slide me to change the range of timeline</span>
       </div>
 
       <div style="margin-top: 100px; text-align: right;">
-        <h2 style="margin-left: 80%; text-align: left">Factors</h2>
+        <span style="color: gray">Choose the factors of gentrification</span>
+        <h2 style="margin-left: 80%; text-align: left;margin-top:0px">Factors</h2>
         <form action="" style="margin-left: 80%; text-align: left">
           <input type="radio" name="data" value="male" checked="true" onclick="crimeClick()"> Crime<br>
           <input type="radio" name="data" value="female" onclick="permitsClick()"> Building Permits<br>
@@ -154,7 +151,7 @@ td .tooltip {
         </form>
       </div>
       <div>
-        <b><div style="font-size:20px;"id="areaName"></div></b>
+        <b><div style="font-size:20px; margin-left:30px"id="areaName"></div></b>
         <br>
         <br>
         <svg class="chart2"></svg>
@@ -163,11 +160,11 @@ td .tooltip {
         <svg class="chart5"></svg>
       </div>
     </td>
-    <button style="margin-left:10px" type="button" class="btn btn-primary" onclick="play()" id="playButton">Play</button>
+    <button style="margin-left:10px" type="button" class="btn btn-primary" onclick="play()" id="playButton">Play</button>  <span style="color: gray"> Click me to play the timeline</span>
     <br>
     <br>
     <td class="chart" style="text-align: center;">
-      <div style="font-size:20px;" id="year">Year: 2010</div>
+      <b><div style="font-size:20px;" id="year">Year: 2010</div></b>
     </td>
 
 
