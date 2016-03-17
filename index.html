@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<head>
 <meta charset="utf-8">
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
   <link rel="stylesheet" href="/d3.slider.css" />  
@@ -126,15 +127,19 @@ td .tooltip {
 </style>
 
 
-<title>Gentrification</title>
-<head>
-  <h1 align="middle" style="color: darkblue; margin-top:0px; margin-bottom:0px;">Gentrification of Seattle</h1>
+
+
+  <title>Gentrification</title>
+  
 </head>
 <body>
+  <h1 align="middle" style="margin-top:0px; margin-bottom:0px;">Gentrification of Seattle</h1>
+  <h3 align="middle" style=" margin-top:0px; margin-bottom:0px;">For INFO 474 Winter 2016, by Walter Ceder, Vincent Jonany and Vikram Thirumalai</h3>
+  <p align="middle" style="margin-top:20px; margin-bottom:0px; margin-left: 10%; margin-right:10%">See how your Seattle neighborhood and those around you have changed during the past few years. It is commonly thought that gentrification is causing Seattle to change, but how has that change affected the places you live, work and play in? Select what factor of change you want to invesitgate. Use the timeline and the play button to see change over time. Click on a neighborhood to see the details for it. Ask yourself if you think the changes have been good or bad for your own life.</p>
   <table>
 
     <td style="vertical-align: top">
-      <div id="sliders">
+      <div id="sliders" style="margin-left:10%">
         <div id="slider-range"></div>
         <br>
         <span style="color: gray; margin-left:10px">Slide me to change the range of timeline</span>
@@ -144,10 +149,10 @@ td .tooltip {
         <span style="color: gray">Choose the factors of gentrification</span>
         <h2 style="margin-left: 80%; text-align: left;margin-top:0px">Factors</h2>
         <form action="" style="margin-left: 80%; text-align: left">
-          <input type="radio" name="data" value="male" checked="true" onclick="crimeClick()"> Crime<br>
+          <input type="radio" name="data" value="male" checked="true" onclick="crimeClick()"> Crimes<br>
           <input type="radio" name="data" value="female" onclick="permitsClick()"> Building Permits<br>
           <input type="radio" name="data" value="other" onclick="landClick()"> Land Permits<br>
-          <input type="radio" name="data" value="other" onclick="cultureClick()"> Cultural Sites<br>
+          <input type="radio" name="data" value="other" onclick="cultureClick()"> Cultural Sites (Libraries, Galleries, etc.)<br>
         </form>
       </div>
       <div>
@@ -160,7 +165,7 @@ td .tooltip {
         <svg class="chart5"></svg>
       </div>
     </td>
-    <button style="margin-left:10px" type="button" class="btn btn-primary" onclick="play()" id="playButton">Play</button>  <span style="color: gray"> Click me to play the timeline</span>
+    <button style="margin-left:10%" type="button" class="btn btn-primary" onclick="play()" id="playButton">Play</button>  <span style="color: gray"> Click me to play the timeline</span>
     <br>
     <br>
     <td class="chart" style="text-align: center;">
